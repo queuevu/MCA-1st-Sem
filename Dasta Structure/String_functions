@@ -1,0 +1,163 @@
+/*Write a c++ program to implement the following without using inbuilt functions,
+i)Concatenate two strings.
+ii)Reverse a given string.
+iii)Compare two strings.
+iv)Chec whether the given string is present in the main string and return the position.
+*/
+#include<iostream>
+using namespace std;
+
+void strconcat(char str1[10],char str2[10]);
+void strrev(char str1[10]);
+void strcompare(char str1[10], char str2[10]);
+int strpos(char str1[20], char str2[20]);
+
+int main()
+{
+    char str1[10],str2[10];
+	int ch,pos;
+	while(true)
+	{
+		cout<<"\nMain menu:\n";
+		cout<<"1-Concatenate two strings.\n2-Reverse a given string.\n3-Compare two strings.\n4-Check whether the given string is present in the main string and return the position.\n5-exit\n";
+		cout<<"Enter your choice:";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1:
+				cout<<"Enter the first string:";
+				cin>>str1;// Note: This stops at the first whitespace
+				cout<<"Enter the second string:";
+				cin>>str2;
+				strconcat(str1,str2);
+				break;
+			case 2:
+				cout << "Enter the string: ";
+				cin >> str1; 
+				strrev(str1);
+				break;
+			case 3:
+				cout << "Enter the first string: ";
+				cin >> str1;
+				cout << "Enter the second string: ";
+				cin >> str2;
+
+				strcompare(str1, str2);
+				break;
+			case 4:
+				// Input strings
+				cout << "Enter a string (max 19 characters): ";
+				cin >> str1;
+				cout << "Enter the string to search (max 19 characters): ";
+				cin >> str2;
+
+				// Search for substring
+				pos = strpos(str1, str2);
+
+				// Output result
+				if (pos == -1) {
+					cout << "String not found!";
+				} else {
+					cout << "String found at position: " << pos + 1; // Convert to one-based position
+				}
+
+				break;
+			case 5:
+				exit(0);
+
+		}
+	}
+    return 0;
+}
+
+void strconcat(char str1[10],char str2[10])
+{
+    int i=0,j=0;
+    while(str1[i]!='\0')
+    {
+        i++;
+    }
+    while(str2[j]!='\0')
+    {
+        str1[i]=str2[j];
+        i++;
+        j++;
+    }
+    str1[i]='\0';
+    cout<<"The concatinated string is:"<<str1;
+}
+
+void strrev(char str1[]) {
+    int i = 0, j = 0;
+    char ch;
+
+    // Find the length of the string
+    while (str1[i] != '\0') {
+        i++;
+    }
+    i--; // Adjust to point to the last character of the string
+
+    // Reverse the string
+    while (j < i) {
+        ch = str1[j];
+        str1[j] = str1[i];
+        str1[i] = ch;
+        j++;
+        i--;
+    }
+
+    cout << "The reversed string is: " << str1 << endl;
+}
+
+void strcompare(char str1[10], char str2[10]) {
+    int i, j, flag = 0, len1 = 0, len2 = 0;
+
+    // Calculate lengths of both strings
+    for (len1 = 0; str1[len1] != '\0'; len1++);
+    for (len2 = 0; str2[len2] != '\0'; len2++);
+
+    if (len1 == len2) {
+        i = 0;
+        while (str1[i] != '\0') {
+            if (str1[i] != str2[i]) {
+                flag = 1; // Set flag if mismatch is found
+                break;
+            }
+            i++;
+        }
+    } else {
+        flag = 1; // Strings are not equal if lengths differ
+    }
+
+    if (flag == 0) {
+        cout << "The strings are equal.";
+    } else {
+        cout << "The strings are not equal.";
+    }
+}
+
+int strpos(char str1[20], char str2[20]) {
+    int pos = -1, i = 0, j = 0;
+
+    while (str1[j] != '\0') {
+        // Match characters of str2 with str1
+        if (str2[i] == str1[j]) {
+            if (pos == -1) {
+                pos = j; // Mark the starting position
+            }
+            i++;
+            if (str2[i] == '\0') {
+                return pos; // Match found
+            }
+        } else {
+            if (pos != -1) {
+                j = pos; // Reset j to the position after the last match attempt
+            }
+            i = 0;
+            pos = -1;
+        }
+        j++;
+    }
+
+    return -1; // No match found
+}
