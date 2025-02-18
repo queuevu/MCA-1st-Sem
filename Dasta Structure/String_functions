@@ -2,7 +2,7 @@
 i)Concatenate two strings.
 ii)Reverse a given string.
 iii)Compare two strings.
-iv)Chec whether the given string is present in the main string and return the position.
+iv)Check whether the given string is present in the main string and return the position.
 */
 #include<iostream>
 using namespace std;
